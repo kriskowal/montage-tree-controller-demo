@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <script src="node_modules/montage/montage.js"></script>
+        <script type="text/montage-serialization">{
+            "owner": {
+                "prototype": "tree-test"
+            },
+            "treeController": {
+                "prototype": "montage/core/tree-controller",
+                "properties": {
+                    "initiallyExpanded": true
+                },
+                "bindings": {
+                    "content": {"<->": "@owner.content"}
+                }
+            },
+            "treeEditor": {
+                "prototype": "tree.reel",
+                "properties": {
+                    "element": {"#": "treeEditor"},
+                    "controller": {"@": "treeController"}
+                }
+            },
+            "treeEditorRow": {
+                "prototype": "indent",
+                "properties": {
+                    "element": {"#": "treeEditorRow"}
+                },
+                "bindings": {
+                    "depth": {
+                        "<-": "@treeEditor.objectAtCurrentIteration.depth"
+                    }
+                }
+            },
+            "expanded": {
+                "prototype": "checkbox",
+                "properties": {
+                    "element": {"#": "expanded"}
+                },
+                "bindings": {
+                    "checked": {
+                        "<->": "@treeEditor.objectAtCurrentIteration.expanded"
+                    },
+                    "!checked": {
+                        "<-": "@treeEditor.objectAtCurrentIteration.content.defined() ? !checked || !enabled : !checked"
+                    },
+                    "enabled": {
+                        "<-": "@treeEditor.objectAtCurrentIteration.children.length != 0"
+                    }
+                }
+            },
+            "treeEditorLabel": {
+                "prototype": "text-field",
+                "properties": {
+                    "element": {"#": "treeEditorLabel"}
+                },
+                "bindings": {
+                    "value": {
+                        "<->": "@treeEditor.objectAtCurrentIteration.content.label ?? ''",
+                        "converter": {"@": "stringConverter"}
+                    }
+                }
+            },
+            "addChildButton": {
+                "prototype": "button",
+                "properties": {
+                    "element": {"#": "addChildButton"}
+                },
+                "bindings": {
+                    "node": {"<-": "@treeEditor.objectAtCurrentIteration"}
+                },
+                "listeners": [
+                    {"type": "action", "listener": {"@": "owner"}}
+                ]
+            },
+            "removeNodeButton": {
+                "prototype": "button",
+                "properties": {
+                    "element": {"#": "removeNodeButton"}
+                },
+                "bindings": {
+                    "node": {"<-": "@treeEditor.objectAtCurrentIteration"}
+                },
+                "listeners": [
+                    {"type": "action", "listener": {"@": "owner"}}
+                ]
+            },
+            "swapButton": {
+                "prototype": "button",
+                "properties": {
+                    "element": {"#": "swapButton"}
+                },
+                "listeners": [
+                    {"type": "action", "listener": {"@": "owner"}}
+                ]
+            },
+            "allExpanded": {
+                "prototype": "checkbox",
+                "properties": {
+                    "element": {"#": "allExpanded"},
+                    "enabled": true
+                },
+                "bindings": {
+                    "checked": {"<->": "@treeController.allExpanded"}
+                }
+            },
+            "noneExpanded": {
+                "prototype": "checkbox",
+                "properties": {
+                    "element": {"#": "noneExpanded"},
+                    "enabled": true
+                },
+                "bindings": {
+                    "checked": {"<->": "@treeController.noneExpanded"}
+                }
+            },
+            "treeView": {
+                "prototype": "tree.reel",
+                "properties": {
+                    "element": {"#": "treeView"},
+                    "controller": {"@": "treeController"}
+                }
+            },
+            "treeViewLabel": {
+                "prototype": "montage/ui/text.reel",
+                "properties": {
+                    "element": {"#": "treeViewLabel"}
+                },
+                "bindings": {
+                    "value": {
+                        "<-": "@treeView.objectAtCurrentIteration.content.label",
+                        "converter": {"@": "stringConverter"}
+                    }
+                }
+            },
+            "treeViewLeader": {
+                "prototype": "montage/ui/repetition.reel",
+                "properties": {
+                    "element": {"#": "treeViewLeader"}
+                },
+                "bindings": {
+                    "content": {
+                        "<-": "@treeView.objectAtCurrentIteration.junctions"
+                    }
+                }
+            },
+            "treeViewJunction": {
+                "prototype": "montage/ui/text.reel",
+                "properties": {
+                    "element": {"#": "treeViewJunction"}
+                },
+                "bindings": {
+                    "value": {
+                        "<-": "@owner.ascii[@treeViewLeader.contentAtCurrentIteration]"
+                    }
+                }
+            },
+            "stringConverter": {
+                "prototype": "tree-test[StringConverter]"
+            }
+        }</script>
+    </head>
+    <body>
+        <button data-montage-id="swapButton">Swap Trees</button>
+        <input type="checkbox" data-montage-id="allExpanded" id="allExpanded"><label for="allExpanded"> All</label>
+        <input type="checkbox" data-montage-id="noneExpanded" id="noneExpanded"><label for="noneExpanded">  None</label>
+        <div data-montage-id="treeEditor">
+            <div data-montage-id="treeEditorRow">
+                <input type="checkbox" data-montage-id="expanded">
+                <input data-montage-id="treeEditorLabel">
+                <button data-montage-id="addChildButton">+</button>
+                <button data-montage-id="removeNodeButton">-</button>
+            </div>
+        </div>
+        <div style="font-family: monospace" data-montage-id="treeView" float="right">
+            <div>
+                <span data-montage-id="treeViewLeader"><span style="white-space: pre" data-montage-id="treeViewJunction"></span></span>
+                <span data-montage-id="treeViewLabel"></span>
+            </div>
+        </div>
+    </body>
+</html>

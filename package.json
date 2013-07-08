@@ -1,0 +1,9 @@
+{
+    "name": "tree-view-demo",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+        "montage": "git://github.com/montagejs/montage.git#2a96cf825cf2f86076eea0d932584415b68c2f95",
+        "frb": "~0.2.8"
+    }
+}

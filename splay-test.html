@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <script src="node_modules/montage/montage.js" data-package="../.."></script>
+        <script type="text/montage-serialization">{
+            "owner": {
+                "prototype": "splay-test"
+            },
+            "splayController": {
+                 "prototype": "montage/core/tree-controller",
+                 "properties": {
+                     "childrenPath": "(left.defined() ? [left] : []).concat(right.defined() ? [right] : [])",
+                     "initiallyExpanded": true
+                 },
+                 "bindings": {
+                     "content": {
+                         "<-": "@owner.set.root"
+                     }
+                 }
+            },
+            "splayView": {
+                "prototype": "tree.reel",
+                "properties": {
+                    "element": {"#": "splayView"},
+                    "controller": {"@": "splayController"}
+                }
+            },
+            "splayViewLabel": {
+                "prototype": "montage/ui/text.reel",
+                "properties": {
+                    "element": {"#": "splayViewLabel"}
+                },
+                "bindings": {
+                    "value": {
+                        "<-": "@splayView.contentAtCurrentIteration.content.value"
+                    }
+                }
+            },
+            "splayViewLeader": {
+                "prototype": "montage/ui/repetition.reel",
+                "properties": {
+                    "element": {"#": "splayViewLeader"}
+                },
+                "bindings": {
+                    "content": {
+                        "<-": "@splayView.contentAtCurrentIteration.junctions"
+                    }
+                }
+            },
+            "splayViewJunction": {
+                "prototype": "montage/ui/text.reel",
+                "properties": {
+                    "element": {"#": "splayViewJunction"}
+                },
+                "bindings": {
+                    "value": {
+                        "<-": "@owner.ascii[@splayViewLeader.contentAtCurrentIteration]"
+                    }
+                }
+            },
+            "splayButton": {
+                "prototype": "button",
+                "properties": {
+                    "element": {"#": "splayButton"}
+                },
+                "bindings": {
+                    "node": {
+                        "<-": "@splayView.contentAtCurrentIteration.content"
+                    }
+                },
+                "listeners": [
+                    {"type": "action", "listener": {"@": "owner"}}
+                ]
+            }
+        }</script>
+    </head>
+    <body>
+        <div style="font-family: monospace" data-montage-id="splayView" float="right">
+            <div>
+                <span data-montage-id="splayViewLeader"><span style="white-space: pre" data-montage-id="splayViewJunction"></span></span>
+                <span data-montage-id="splayViewLabel"></span>
+                <button data-montage-id="splayButton">splay</button>
+            </div>
+        </div>
+    </body>
+</html>
