@@ -9,7 +9,7 @@ exports.SplayTest = Component.specialize({
             final: " ^-",
             medial: " +-",
             before: " | ",
-            beyond: "   "
+            after: "   "
         }
     },
 

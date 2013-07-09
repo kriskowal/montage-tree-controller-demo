@@ -14,7 +14,7 @@ exports.TreeTest = Component.specialize({
             final: " ^-",
             medial: " +-",
             before: " | ",
-            beyond: "   "
+            after: "   "
         }
     },
 
