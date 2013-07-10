@@ -1,9 +1,11 @@
 <html>
     <head>
-        <script src="node_modules/montage/montage.js"></script>
         <script type="text/montage-serialization">{
             "owner": {
-                "prototype": "tree-test"
+                "prototype": "ui/main.reel",
+                "properties": {
+                    "element": {"#": "owner"}
+                }
             },
             "treeController": {
                 "prototype": "montage/core/tree-controller",
@@ -15,14 +17,14 @@
                 }
             },
             "treeEditor": {
-                "prototype": "tree.reel",
+                "prototype": "ui/tree.reel",
                 "properties": {
                     "element": {"#": "treeEditor"},
                     "controller": {"@": "treeController"}
                 }
             },
             "treeEditorRow": {
-                "prototype": "indent",
+                "prototype": "ui/indent.reel",
                 "properties": {
                     "element": {"#": "treeEditorRow"}
                 },
@@ -33,7 +35,7 @@
                 }
             },
             "expanded": {
-                "prototype": "checkbox",
+                "prototype": "digit/ui/checkbox.reel",
                 "properties": {
                     "element": {"#": "expanded"}
                 },
@@ -50,19 +52,18 @@
                 }
             },
             "treeEditorLabel": {
-                "prototype": "text-field",
+                "prototype": "digit/ui/text-field.reel",
                 "properties": {
                     "element": {"#": "treeEditorLabel"}
                 },
                 "bindings": {
                     "value": {
-                        "<->": "@treeEditor.objectAtCurrentIteration.content.label ?? ''",
-                        "converter": {"@": "stringConverter"}
+                        "<->": "@treeEditor.objectAtCurrentIteration.content.label ?? ''"
                     }
                 }
             },
             "addChildButton": {
-                "prototype": "button",
+                "prototype": "digit/ui/button.reel",
                 "properties": {
                     "element": {"#": "addChildButton"}
                 },
@@ -74,7 +75,7 @@
                 ]
             },
             "removeNodeButton": {
-                "prototype": "button",
+                "prototype": "digit/ui/button.reel",
                 "properties": {
                     "element": {"#": "removeNodeButton"}
                 },
@@ -86,7 +87,7 @@
                 ]
             },
             "swapButton": {
-                "prototype": "button",
+                "prototype": "digit/ui/button.reel",
                 "properties": {
                     "element": {"#": "swapButton"}
                 },
@@ -95,7 +96,7 @@
                 ]
             },
             "allExpanded": {
-                "prototype": "checkbox",
+                "prototype": "digit/ui/checkbox.reel",
                 "properties": {
                     "element": {"#": "allExpanded"},
                     "enabled": true
@@ -105,7 +106,7 @@
                 }
             },
             "noneExpanded": {
-                "prototype": "checkbox",
+                "prototype": "digit/ui/checkbox.reel",
                 "properties": {
                     "element": {"#": "noneExpanded"},
                     "enabled": true
@@ -115,7 +116,7 @@
                 }
             },
             "treeView": {
-                "prototype": "tree.reel",
+                "prototype": "ui/tree.reel",
                 "properties": {
                     "element": {"#": "treeView"},
                     "controller": {"@": "treeController"}
@@ -128,8 +129,7 @@
                 },
                 "bindings": {
                     "value": {
-                        "<-": "@treeView.objectAtCurrentIteration.content.label",
-                        "converter": {"@": "stringConverter"}
+                        "<-": "@treeView.objectAtCurrentIteration.content.label ?? ''"
                     }
                 }
             },
@@ -154,28 +154,27 @@
                         "<-": "@owner.ascii[@treeViewLeader.contentAtCurrentIteration]"
                     }
                 }
-            },
-            "stringConverter": {
-                "prototype": "tree-test[StringConverter]"
             }
         }</script>
     </head>
     <body>
-        <button data-montage-id="swapButton">Swap Trees</button>
-        <input type="checkbox" data-montage-id="allExpanded" id="allExpanded"><label for="allExpanded"> All</label>
-        <input type="checkbox" data-montage-id="noneExpanded" id="noneExpanded"><label for="noneExpanded">  None</label>
-        <div data-montage-id="treeEditor">
-            <div data-montage-id="treeEditorRow">
-                <input type="checkbox" data-montage-id="expanded">
-                <input data-montage-id="treeEditorLabel">
-                <button data-montage-id="addChildButton">+</button>
-                <button data-montage-id="removeNodeButton">-</button>
+        <div data-montage-id="owner">
+            <button data-montage-id="swapButton">Swap Trees</button>
+            <input type="checkbox" data-montage-id="allExpanded" id="allExpanded"><label for="allExpanded"> All</label>
+            <input type="checkbox" data-montage-id="noneExpanded" id="noneExpanded"><label for="noneExpanded">  None</label>
+            <div data-montage-id="treeEditor">
+                <div data-montage-id="treeEditorRow">
+                    <input type="checkbox" data-montage-id="expanded">
+                    <input data-montage-id="treeEditorLabel">
+                    <button data-montage-id="addChildButton">+</button>
+                    <button data-montage-id="removeNodeButton">-</button>
+                </div>
             </div>
-        </div>
-        <div style="font-family: monospace" data-montage-id="treeView" float="right">
-            <div>
-                <span data-montage-id="treeViewLeader"><span style="white-space: pre" data-montage-id="treeViewJunction"></span></span>
-                <span data-montage-id="treeViewLabel"></span>
+            <div style="font-family: monospace" data-montage-id="treeView" float="right">
+                <div>
+                    <span data-montage-id="treeViewLeader"><span style="white-space: pre" data-montage-id="treeViewJunction"></span></span>
+                    <span data-montage-id="treeViewLabel"></span>
+                </div>
             </div>
         </div>
     </body>

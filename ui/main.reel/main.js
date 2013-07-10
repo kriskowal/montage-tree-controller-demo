@@ -7,7 +7,7 @@ function Node(label, children) {
     this.children = children || [];
 }
 
-exports.TreeTest = Component.specialize({
+exports.Main = Component.specialize({
 
     ascii: {
         value: {
@@ -19,7 +19,7 @@ exports.TreeTest = Component.specialize({
     },
 
     constructor: {
-        value: function TreeTest() {
+        value: function MontageTreeDemo() {
             this.super();
             this.content = new Node("A");
             this.content.children = [
@@ -57,11 +57,5 @@ exports.TreeTest = Component.specialize({
         }
     }
 
-});
-
-var Operators = require("montage/frb/operators");
-exports.StringConverter = Montage.specialize({
-    convert: {value: Operators.string},
-    revert: {value: Operators.string}
 });
 
